@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>طلبات المندوب - شركة وصّل</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Top Navbar (Delivery Man) -->
+  <nav class="navbar" aria-label="تنقل المندوب">
+    <div class="navbar-inner">
+      <a href="#" class="navbar-brand">
+        <span class="brand-logo">و</span>
+        <span>وصّل</span>
+      </a>
+
+      <ul class="navbar-links">
+        <li><a href="#" class="nav-link" > الرئيسية</a></li>
+        <li><a href="#" class="nav-link active" >الطلبات المسندة</a></li>
+        <li><a href="#" class="nav-link" >مستحقاتي</a></li>
+      </ul>
+
+      <div class="navbar-right">
+        <div class="user-chip">
+          <span class="user-avatar">م</span>
+          <span>محمد علي </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <!-- Header -->
+    <header class="page-header">
+      <h1 class="page-title">طلبات مندوب التوصيل — شركة «وصّل»</h1>
+      <p class="page-subtitle">الطلبات المسندة إليك؛ راجع حالة التوصيل والبيانات والأسعار، واضغط «التفاصيل» لفتح كامل معلومات الطلب.</p>
+    </header>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <div class="dropdown-wrapper">
+          <button type="button" id="filterBtn" class="btn-filter">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            تصفية (الحالة / التاريخ / السعر)
+          </button>
+          <div id="filterMenu" class="dropdown-menu">
+            <div class="filter-group-label">حالة الطلب</div>
+            <select id="statusFilterSelect" class="filter-field" aria-label="تصفية حسب الحالة">
+              <option value="all">جميع الحالات</option>
+              <option value="new">جديد</option>
+              <option value="on_the_way">في الطريق</option>
+              <option value="delivered">تم التوصيل</option>
+            </select>
+
+            <hr class="filter-divider" />
+
+            <div class="filter-group-label">التاريخ (من / إلى)</div>
+            <div class="filter-row-2">
+              <input type="date" id="dateFromInput" class="filter-field" aria-label="من تاريخ" />
+              <input type="date" id="dateToInput" class="filter-field" aria-label="إلى تاريخ" />
+            </div>
+
+            <hr class="filter-divider" />
+
+            <div class="filter-group-label">الإجمالي (YER)</div>
+            <div class="filter-row-2">
+              <input type="number" id="minPriceInput" class="filter-field" placeholder="أقل سعر" min="0" />
+              <input type="number" id="maxPriceInput" class="filter-field" placeholder="أعلى سعر" min="0" />
+            </div>
+
+            <div class="filter-actions">
+              <button type="button" id="applyFilterBtn" class="btn-apply-filter">تطبيق</button>
+              <button type="button" id="resetFilterBtn" class="btn-reset-filter">إعادة ضبط</button>
+            </div>
+          </div>
+        </div>
+
+        <span id="activeFilterBadge" class="active-filter-pill" style="display: none;">
+          <span id="activeFilterText"></span>
+          <button type="button" id="clearFilterBtn" aria-label="إزالة التصفية">&times;</button>
+        </span>
+      </div>
+
+      <div class="toolbar-right">
+        <div class="search-box">
+          <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="searchInput" class="search-input" placeholder="بحث باسم العميل..." />
+        </div>
+
+        <div class="toolbar-divider"></div>
+
+        <div class="dropdown-wrapper">
+          <button type="button" id="columnsBtn" class="btn-columns">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="4" y1="21" x2="4" y2="14"></line>
+              <line x1="4" y1="10" x2="4" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12" y2="3"></line>
+              <line x1="20" y1="21" x2="20" y2="16"></line>
+              <line x1="20" y1="12" x2="20" y2="3"></line>
+              <line x1="1" y1="14" x2="7" y2="14"></line>
+              <line x1="9" y1="8" x2="15" y2="8"></line>
+              <line x1="17" y1="16" x2="23" y2="16"></line>
+            </svg>
+            الأعمدة
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div id="columnsMenu" class="dropdown-menu left-align">
+            <label class="dropdown-checkbox"><input type="checkbox" data-col="id" checked /> رقم الطلب</label>
+            <label class="dropdown-checkbox"><input type="checkbox" data-col="customer" checked /> العميل</label>
+            <label class="dropdown-checkbox"><input type="checkbox" data-col="address" /> العنوان</label>
+            <label class="dropdown-checkbox"><input type="checkbox" data-col="items" checked /> الأصناف</label>
+            <label class="dropdown-checkbox"><input type="checkbox" data-col="status" checked /> الحالة</label>
+            <label class="dropdown-checkbox"><input type="checkbox" data-col="total" checked /> الإجمالي</label>
+            <label class="dropdown-checkbox"><input type="checkbox" data-col="created_at" checked /> تاريخ الطلب</label>
+            <label class="dropdown-checkbox"><input type="checkbox" data-col="actions" checked /> التفاصيل</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrapper">
+      <table id="ordersTable">
+        <thead>
+          <tr>
+            <th data-col="id">رقم الطلب</th>
+            <th data-col="customer">العميل</th>
+            <th data-col="address" class="col-hidden">العنوان</th>
+            <th data-col="items">الأصناف</th>
+            <th data-col="status">الحالة</th>
+            <th data-col="total">الإجمالي</th>
+            <th data-col="created_at">تاريخ الطلب</th>
+            <th data-col="actions">التفاصيل</th>
+          </tr>
+        </thead>
+        <tbody id="ordersBody"></tbody>
+      </table>
+
+      <!-- Loading State -->
+      <div id="loadingState" class="state-panel" role="status" aria-live="polite" hidden>
+        <div class="state-spinner" aria-hidden="true"></div>
+        <div class="state-title">Loading data, please wait...</div>
+        <div class="state-subtext">جاري تحميل بيانات الطلبات من الملف المحلي...</div>
+      </div>
+
+      <!-- Error State -->
+      <div id="errorState" class="state-panel" role="alert" aria-live="assertive" hidden>
+        <div class="state-error-box">
+          <div class="state-title">Something went wrong. Failed to load data.</div>
+          <div id="errorDetails" class="state-subtext">تعذر قراءة ملف الطلبات المحلي.</div>
+          <button type="button" id="retryBtn" class="btn-retry">Retry</button>
+        </div>
+      </div>
+
+      <!-- Empty Source Data State -->
+      <div id="emptySourceState" class="state-panel" role="status" aria-live="polite" hidden>
+        <div class="state-title">No data available.</div>
+        <div class="state-subtext">لا توجد طلبات مسندة حالياً في ملف البيانات.</div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <footer class="pagination-bar" id="paginationBar">
+      <div class="pagination-left">
+        <div class="page-buttons">
+          <button type="button" id="firstPageBtn" class="page-btn" aria-label="الصفحة الأولى">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="13 17 18 12 13 7"></polyline>
+              <line x1="18" y1="5" x2="18" y2="19"></line>
+            </svg>
+          </button>
+          <button type="button" id="prevPageBtn" class="page-btn" aria-label="الصفحة السابقة">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+          <button type="button" id="currentPageBtn" class="page-btn active">1</button>
+          <button type="button" id="nextPageBtn" class="page-btn" aria-label="الصفحة التالية">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <button type="button" id="lastPageBtn" class="page-btn" aria-label="الصفحة الأخيرة">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="11 17 6 12 11 7"></polyline>
+              <line x1="6" y1="5" x2="6" y2="19"></line>
+            </svg>
+          </button>
+        </div>
+
+        <label class="go-to-page">
+          <span>انتقل إلى صفحة</span>
+          <input type="number" id="pageInput" class="page-input" min="1" value="1" />
+        </label>
+
+        <span id="showingInfo">عرض 0 من 0</span>
+      </div>
+
+      <div class="pagination-right">
+        <label for="rowsPerPage">صفوف لكل صفحة</label>
+        <select id="rowsPerPage" class="rows-select">
+          <option value="20" selected>20</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+        </select>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Order Details Popup Modal -->
+  <div id="orderModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalOrderTitle" hidden>
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h2 id="modalOrderTitle" class="modal-title">تفاصيل الطلب</h2>
+          <span id="modalOrderStatus" class="badge badge-new"></span>
+        </div>
+        <button type="button" id="closeModalBtn" class="modal-close-btn" aria-label="إغلاق النافذة">&times;</button>
+      </div>
+      <div id="modalBody" class="modal-body"></div>
+    </div>
+  </div>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
